@@ -1,87 +1,262 @@
-body {
-    font-family: "DM Sans", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-    text-align: center;
+:root {
+  --primary-color: #3498db;
+  --secondary-color: #2c3e50;
+  --accent-color: #e74c3c;
+  --light-bg: #f9f9f9;
+  --dark-bg: #2c3e50;
+  --text-color: #333;
+  --light-text: #fff;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-div {
-    /* display: flex; */
-    justify-content: center;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--light-bg);
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.container {
+  width: 100%;
+  padding: 20px;
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  margin-bottom: 30px;
+}
+
+/* Typography */
+.dm-sans-title {
+  font-weight: 700;
+  color: var(--secondary-color);
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 10px;
+}
+
+h1, h2, h3, h4 {
+  color: var(--secondary-color);
+  margin-bottom: 15px;
 }
 
 h1 {
-    padding-top: 20px;
-    padding-right: 20px;
+  font-size: 2.5rem;
 }
 
-img {
-    display: inline;
-    padding: 10px;
+h2 {
+  font-size: 1.8rem;
+  margin-top: 30px;
 }
 
-.dm-sans-title {
-    font-family: "DM Sans", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 600;
-    font-style: normal;
+h3 {
+  font-size: 1.5rem;
+  margin-top: 25px;
+}
+
+p {
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+/* Navigation */
+.nav {
+  background-color: var(--secondary-color);
+  padding: 10px 20px;
+  border-radius: var(--border-radius);
+  margin-bottom: 30px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav ul {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+}
+
+.nav a {
+  color: var(--light-text);
+  text-decoration: none;
+  padding: 8px 15px;
+  border-radius: var(--border-radius);
+  transition: background-color 0.3s ease;
+}
+
+.nav a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Form elements */
+select, input, button {
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  font-family: inherit;
+  font-size: 16px;
+}
+
+select {
+  width: 300px;
+  cursor: pointer;
+}
+
+button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: 600;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+/* Data visualization elements */
+#graph, #box_plot, #histogram, #tree {
+  width: 100%;
+  margin: 20px 0;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  background-color: white;
+  min-height: 400px; /* Add minimum height to prevent collapsing */
+}
+
+#box_plot, #histogram {
+  min-height: 350px; /* Slightly shorter for these secondary visualizations */
 }
 
 .scrollable-div {
-  /* Set a fixed height for the div */
-  height: 200px; /* Adjust as needed */
-
-  /* Add overflow property to make content scrollable */
-  overflow: auto; /* or overflow: scroll; */
+  max-height: 500px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 20px 0;
+  min-height: 300px; /* Add minimum height here too */
 }
 
+/* Results section */
+.results {
+  background-color: var(--light-bg);
+  padding: 15px;
+  border-left: 4px solid var(--primary-color);
+  margin: 20px 0;
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
 
-/* Code for header in 310 project */
-ul {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-  }
- 
-  li a {
-    display: block;
-    color: rgb(0, 0, 0);
-    text-align: center;
-    padding: 14px 16px;
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 0.9em;
+  overflow-x: auto;
+  display: block;
+}
+
+th, td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+th {
+  background-color: var(--secondary-color);
+  color: var(--light-text);
+  font-weight: bold;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Feature sections */
+.feature-section {
+  margin: 40px 0;
+  padding: 20px;
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.feature-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.feature-number {
+  background-color: var(--primary-color);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+/* Form layout */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.input-group label {
+  min-width: 180px;
+}
+
+/* Highlights */
+.highlight {
+  font-weight: bold;
+  color: var(--accent-color);
+}
+
+.info-box {
+  background-color: rgba(52, 152, 219, 0.1);
+  border-left: 4px solid var(--primary-color);
+  padding: 15px;
+  margin: 20px 0;
+  font-size: 0.9em;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .nav ul {
+    flex-direction: column;
+    gap: 10px;
   }
   
-  li a:hover {
-    background-color: #111;
-    color: white;
+  .input-group {
+    flex-direction: column;
+    align-items: flex-start;
   }
-
-  th, td {
-    border: 1px solid;
-    padding: 8px;
+  
+  select {
+    width: 100%;
   }
-
-  table {
-    border-collapse: collapse;
-  }
-
-  #tree {
-    height: 100px;
-  }
-
-button {
-    background-color: #3b2eb2;
-    color: white;
-    padding: 12px 20px;
-    margin: 6px 0;
-    border: none;
-    cursor: pointer;
-    font-size: 25px;
-    font-weight: bold;  
-    border-radius: 30px;  
-  }
-
-  button:hover {
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  }
+}
 
