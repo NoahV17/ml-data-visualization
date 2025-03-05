@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSC 310 Final</title>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis-network.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis-network.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="https://www.lactame.com/lib/ml/6.0.0/ml.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="script.js"></script>
+</head>
+
+<body>
+    <ul>
+        <li><a href="../projects.html">Back to projects</a></li>
+        <li><a href="https://github.com/NoahV17/portfolio_website/tree/main/310" target="_blank">Visit the code on GitHub </a></li>
+    </ul>
+    
+    <h1 class="dm-sans-title">Visual statistics - ML</h1>
+    <p>Welcome to my final project for CSC 310 Programming for Data Science.<br><br>
+    The goal is to help show the relationship between variables in a dataset,<br>
+    Visualizing and understanding data using a scatter plots, projected regression models, r-square, and more.<br><br>
+    </p>
+    <h2>1. Understand the data</h2>
+    <p>The first step to analyzing data is understanding the dataset you are working with,<br>
+        the following is a link to the dataset we will work with. Try and conclude where different connections may lie.<br>
+        </p>
+    <a href="https://github.com/NoahV17/portfolio_website/blob/main/310/heart.csv" target="_blank">Link to the dataset on GitHub</a><br>
+    <br><br>
+    <h2>2.1 Training the model</h2>
+    <p>Now that we have a better understanding of the data, we can train our first model.<br><br>
+        We are going to first create a scatter plot of the data, <heavy>choose the x and y axis variables you would like to compare.</heavy><br>
+        After choosing the variables, press "Train and show regression data" button to see the linear regression's output.</p>
+
+    <div id="columnOptions">
+    <label for="x-select">X Axis Column:</label>
+    <select name="cols" id="x-select">
+        <option value="">--Please choose an option--</option>
+        <option value="age">Age</option>
+        <option value="resting_blood_pressure">Resting blood pressure</option>
+        <option value="serum_cholestoral">Serum cholestoral</option>
+        <option value="resting_electrocardiographic_results">Resting electro results</option>
+        <option value="maximum_heart_rate_achieved">Max HR</option>
+        <option value="oldpeak">Old peak</option>
+        <option value="slope_peak_exercise">Slope peak exercise</option>
+        <option value="number_of_major_vessels">Num major vessels</option>  
+    </select>
+<br>
+    <label for="y-select">Y Axis Column:</label>
+    <select name="cols" id="y-select">
+        <option value="">--Please choose an option--</option>
+        <option value="age">Age</option>
+        <option value="resting_blood_pressure">Resting blood pressure</option>
+        <option value="serum_cholestoral">Serum cholestoral</option>
+        <option value="resting_electrocardiographic_results">Resting electro results</option>
+        <option value="maximum_heart_rate_achieved">Max HR</option>
+        <option value="oldpeak">Old peak</option>
+        <option value="slope_peak_exercise">Slope peak exercise</option>
+        <option value="number_of_major_vessels">Num major vessels</option>
+    </select><br>
+    Input X Value for Prediction: <input type="text" id="XpredictY" placeholder="0">
+    <br>
+    <button onclick="trainAndOutput()">Train and show regression data</button>
+    <br><br>
+    <ul>
+        <li>Is there a relatioship between the x and y variables?</li>
+        <li>If not, try other categories that might have a relationship.</li>
+    </ul>
+
+    <div id="graph"></div>
+    <!-- make sure this is centered ^ -->
+    
+    <div style="font-weight: bold;" id="output1"></div>
+    <div id="explanation"></div>
+    <p>
+    If you input a number to be predicted on, it will be output below.<br>
+    The prediction is done using the linear regression model computed with the ml.js library.</p>
+    <div style="font-weight: bold;" id="output2"></div>
+    <div id="testOut"></div>
+    <h3>2.2</h3>
+    <p>Here are a couple more ways to visualize the variables that you chose.<br>
+        While not using machine learning like the above linear model,<br>
+        these can be very useful for informed inferences.</p>
+    <div style="width: 70%;" id="box_plot"></div>
+    <div style="width: 70%;" id="histogram"></div>
+        <br><br>
+    <h2>3. Assess model's accuracy</h2>
+    <p>The table below is to show a glimpse into the variable's relationships,
+       it shows the R-Square score of each<br>combination of variables you have chosen(calculated from the best fit linear regression line),
+       <br>For reference, one of the better models hits .37 and second .16. 
+    </p>
+    <div><table style="align-items: center;">
+        <tr>
+            <th></th>
+            <th>Age</th>
+            <th>Resting blood pressure</th>
+            <th>Serum cholestoral</th>
+            <th>Resting electro results</th>
+            <th>Max HR</th>
+            <th>Old peak</th>
+            <th>Slope peak exercise</th>
+            <th>Num major vessels</th>
+        </tr>
+        <tr>
+            <th>Age</th>
+            <td><p id="rs_age_age"></p></td>
+            <td><p id="rs_age_resting_blood_pressure"></p></td>
+            <td><p id="rs_age_serum_cholestoral"></p></td>
+            <td><p id="rs_age_resting_electrocardiographic_results"></p></td>
+            <td><p id="rs_age_maximum_heart_rate_achieved"></p></td>
+            <td><p id="rs_age_oldpeak"></p></td>
+            <td><p id="rs_age_slope_peak_exercise"></p></td>
+            <td><p id="rs_age_number_of_major_vessels"></p></td>
+        </tr>
+        <tr>
+            <th>Resting blood pressure</th>
+            <td><p id="rs_resting_blood_pressure_age"></p></td>
+            <td><p id="rs_resting_blood_pressure_resting_blood_pressure"></p></td>
+            <td><p id="rs_resting_blood_pressure_serum_cholestoral"></p></td>
+            <td><p id="rs_resting_blood_pressure_resting_electrocardiographic_results"></p></td>
+            <td><p id="rs_resting_blood_pressure_maximum_heart_rate_achieved"></p></td>
+            <td><p id="rs_resting_blood_pressure_oldpeak"></p></td>
+            <td><p id="rs_resting_blood_pressure_slope_peak_exercise"></p></td>
+            <td><p id="rs_resting_blood_pressure_number_of_major_vessels"></p></td>
+        </tr>
+        <tr>
+            <th>Serum cholestoral</th>
+            <td><p id="rs_serum_cholestoral_age"></p></td>
+            <td><p id="rs_serum_cholestoral_resting_blood_pressure"></p></td>
+            <td><p id="rs_serum_cholestoral_serum_cholestoral"></p></td>
+            <td><p id="rs_serum_cholestoral_resting_electrocardiographic_results"></p></td>
+            <td><p id="rs_serum_cholestoral_maximum_heart_rate_achieved"></p></td>
+            <td><p id="rs_serum_cholestoral_oldpeak"></p></td>
+            <td><p id="rs_serum_cholestoral_slope_peak_exercise"></p></td>
+            <td><p id="rs_serum_cholestoral_number_of_major_vessels"></p></td>
+        </tr>
+        <tr>
+            <th>Resting electro results</th>
+            <td><p id="rs_resting_electrocardiographic_results_age"></p></td>
+            <td><p id="rs_resting_electrocardiographic_results_resting_blood_pressure"></p></td>
+            <td><p id="rs_resting_electrocardiographic_results_serum_cholestoral"></p></td>
+            <td><p id="rs_resting_electrocardiographic_results_resting_electrocardiographic_results"></p></td>
+            <td><p id="rs_resting_electrocardiographic_results_maximum_heart_rate_achieved"></p></td>
+            <td><p id="rs_resting_electrocardiographic_results_oldpeak"></p></td>
+            <td><p id="rs_resting_electrocardiographic_results_slope_peak_exercise"></p></td>
+            <td><p id="rs_resting_electrocardiographic_results_number_of_major_vessels"></p></td>
+        </tr>
+        <tr>
+            <th>Max HR</th>
+            <td><p id="rs_maximum_heart_rate_achieved_age"></p></td>
+            <td><p id="rs_maximum_heart_rate_achieved_resting_blood_pressure"></p></td>
+            <td><p id="rs_maximum_heart_rate_achieved_serum_cholestoral"></p></td>
+            <td><p id="rs_maximum_heart_rate_achieved_resting_electrocardiographic_results"></p></td>
+            <td><p id="rs_maximum_heart_rate_achieved_maximum_heart_rate_achieved"></p></td>
+            <td><p id="rs_maximum_heart_rate_achieved_oldpeak"></p></td>
+            <td><p id="rs_maximum_heart_rate_achieved_slope_peak_exercise"></p></td>
+            <td><p id="rs_maximum_heart_rate_achieved_number_of_major_vessels"></p></td>    
+        </tr>
+        <tr>
+            <th>Old peak</th>
+            <td><p id="rs_oldpeak_age"></p></td>
+            <td><p id="rs_oldpeak_resting_blood_pressure"></p></td>
+            <td><p id="rs_oldpeak_serum_cholestoral"></p></td>
+            <td><p id="rs_oldpeak_resting_electrocardiographic_results"></p></td>
+            <td><p id="rs_oldpeak_maximum_heart_rate_achieved"></p></td>
+            <td><p id="rs_oldpeak_oldpeak"></p></td>
+            <td><p id="rs_oldpeak_slope_peak_exercise"></p></td>
+            <td><p id="rs_oldpeak_number_of_major_vessels"></p></td>   
+        </tr>
+        <tr>
+            <th>Slope peak exercise</th>
+            <td><p id="rs_slope_peak_exercise_age"></p></td>
+            <td><p id="rs_slope_peak_exercise_resting_blood_pressure"></p></td>
+            <td><p id="rs_slope_peak_exercise_serum_cholestoral"></p></td>
+            <td><p id="rs_slope_peak_exercise_resting_electrocardiographic_results"></p></td>
+            <td><p id="rs_slope_peak_exercise_maximum_heart_rate_achieved"></p></td>
+            <td><p id="rs_slope_peak_exercise_oldpeak"></p></td>
+            <td><p id="rs_slope_peak_exercise_slope_peak_exercise"></p></td>
+            <td><p id="rs_slope_peak_exercise_number_of_major_vessels"></p></td>    
+        </tr>
+        <tr>
+            <th>Num major vessels</th>
+            <td><p id="rs_number_of_major_vessels_age"></p></td>
+            <td><p id="rs_number_of_major_vessels_resting_blood_pressure"></p></td>
+            <td><p id="rs_number_of_major_vessels_serum_cholestoral"></p></td>
+            <td><p id="rs_number_of_major_vessels_resting_electrocardiographic_results"></p></td>
+            <td><p id="rs_number_of_major_vessels_maximum_heart_rate_achieved"></p></td>
+            <td><p id="rs_number_of_major_vessels_oldpeak"></p></td>
+            <td><p id="rs_number_of_major_vessels_slope_peak_exercise"></p></td>
+            <td><p id="rs_number_of_major_vessels_number_of_major_vessels"></p></td>    
+        </tr>
+    </table></div>
+    <br><br>
+    <h2>4. Try other models</h2>
+    <p>Since not much was found using purely the quantitive data, lets choose a model that trains itself using both quantitive and qualitative data.<br>
+       We will use the 'heart_disease' column as the target variable and see if there is any way to make a fairly accurate classification.</p>
+
+       Enter max depth of your tree(default 5): <input type="text" id="maxDepth" placeholder="0">
+    <br><button onclick="trainAndOutputTree()">Train tree model and output accuracy</button>
+    <div id="tree" class="scrollable-div"></div>
+    <div id="tree_accuracy"></div>
+        
+        <h2>5. Conclusion</h2>
+    <p>In this exercise, we used two different machine learning models to help model the data in question.<br>
+       Out goal was to find a relationship between the data, and possibly with a target variable in the dataset.<br>
+       With our target variable in the end being "heart_disease", we were able to create a highly accurate decision tree<br>
+        that determines the best path to assess if a row in the dataset has heart_disease True or False.</p>
+</body>
+</html>

@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "ml-regression-polynomial": "^3.0.0"
+  }
+}
